@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "bookings")
@@ -22,14 +23,12 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "eventid")
-    private Event event;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private User user;
 
-    private boolean paid;
+    private long eventid;
+
+    private long userid;
+
+    private int paid;
 
 }
