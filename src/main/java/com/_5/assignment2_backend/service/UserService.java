@@ -24,6 +24,14 @@ public class UserService {
         return users.subList(start,end);
     }
 
+    public List<User> getAllUsersByFilter(PageRequest req, String q) {
+        List<User> users = userRepository.findByNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(q,q,q, req.getSort());
+        int start = (int) req.getOffset();
+        int end = Math.min((start + req.getPageSize()), users.size());
+        return users.subList(start,end);
+    }
+
+
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }

@@ -34,7 +34,14 @@ public class UserController {
         // Handle sorting order
         Sort sort = _order.equalsIgnoreCase("ASC") ? Sort.by(Sort.Order.asc(_sort)) : Sort.by(Sort.Order.desc(_sort));
         PageRequest pageRequest = PageRequest.of(page, size, sort);
-        List<User> users =  userService.getAllUsers(pageRequest);
+        List<User> users;
+
+        if (q != null && !q.isEmpty()) {
+            users = userService.getAllUsersByFilter(pageRequest,q);
+        } else {
+            users = userService.getAllUsers(pageRequest);
+        }
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "X-Total-Count");
         headers.add("X-Total-Count", String.valueOf(users.size()));
